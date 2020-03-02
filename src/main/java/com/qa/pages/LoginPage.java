@@ -1,11 +1,14 @@
 package com.qa.pages;
 
+import org.openqa.selenium.support.PageFactory;
+
 import com.qa.BaseTest;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class LoginPage extends BaseTest {
+public class LoginPage {
 
 	@AndroidFindBy(accessibility = "test-Username")
 	private MobileElement userNameTxtFld;
@@ -19,29 +22,38 @@ public class LoginPage extends BaseTest {
 	@AndroidFindBy(xpath = "//android.view.ViewGroup[@cont"
 			+ "ent-desc=\"test-Error message\"]/android.widget.TextView")
 	private MobileElement errTxt;
+	
+	BaseTest base;
+	
+	
+	public LoginPage() {
+		
+		base=new BaseTest();
+		PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
+	}
 
 	public LoginPage enterUserName(String username) {
 
-		sendKeys(userNameTxtFld, username);
+		base.sendKeys(userNameTxtFld, username);
 		return this;
 	}
 
 	public LoginPage enterPassword(String password) {
 
-		sendKeys(passwordTxtFld, password);
+		base.sendKeys(passwordTxtFld, password);
 		return this;
 
 	}
 
 	public ProductPage pressLoginBtn() {
 
-		click(loginBtn);
+		base.click(loginBtn);
 		return new ProductPage();
 	}
 
 	public String getErrTxt() {
 
-		return getAttribute(errTxt, "Text");
+		return base.getAttribute(errTxt, "Text");
 
 	}
 

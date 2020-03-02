@@ -30,12 +30,19 @@ public class BaseTest {
 	InputStream inputStream;
 
 	public BaseTest() {
-		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 
-	@Parameters({ "platformName", "platformVersion", "deviceName" })
-	@BeforeTest
-	public void beforeTest(String platformName, String platformVersion, String deviceName) {
+	public void setDriver(AppiumDriver driver) {
+		
+		this.driver=driver;		
+	}
+	
+	public AppiumDriver getDriver() {
+		return driver;
+	}
+	
+	
+	public void initializeDriver(String platformName, String platformVersion, String deviceName) {
 
 		try {
 
@@ -93,8 +100,7 @@ public class BaseTest {
 
 	}
 
-	@AfterTest
-	public void afterTest() {
+	public void quitDriver() {
 
 		driver.quit();
 
